@@ -2,7 +2,7 @@
   <div class="about">
     <h1>This is an about page for {{ $route.params.username }}</h1>
     <div v-for="student of students" :key="student.id">
-      <button :data-clickid="student.id" @click="toUser">
+      <button :data-clickid="student.id" :student="student" @click="toUser">
         To {{ student.name }}
       </button>
     </div>

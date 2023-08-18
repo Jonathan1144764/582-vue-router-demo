@@ -1,6 +1,6 @@
 <template>
-  <h1>This is the user page for {{ $route.params.id }}</h1>
-  <button @click="showCurStudent">About user</button>
+  <h1>This is the user page for {{ showCurStudent.name }}</h1>
+  <button @click="about" :student="student">About user</button>
   <button @click="navigate">Back home</button>
   <!-- <p>{{ students }}</p> -->
   <p>{{ showCurStudent }}</p>
@@ -45,6 +45,9 @@ export default {
       ],
     };
   },
+  props: {
+    student: Object,
+  },
   computed: {
     showCurStudent() {
       for (let student of this.students) {
@@ -58,10 +61,18 @@ export default {
       this.$router.push({ name: "home" });
     },
     about() {
-      this.$router.push({
-        name: "aboutuser",
-        params: { username: this.$route.params.username },
-      });
+      for (let i = 0; i < this.students.length; i++) {
+        if (this.students[i].id == this.$route.params.id) {
+          this.$router.push({
+            name: "aboutuser",
+            params: { username: this.students[i].name },
+          });
+        }
+      }
+      // this.$router.push({
+      //   name: "aboutuser",
+      //   params: { username: this.$route.params.username },
+      // });
     },
     // showCurStudent() {
     //   for (let i = 0; i < this.students.length; i++) {

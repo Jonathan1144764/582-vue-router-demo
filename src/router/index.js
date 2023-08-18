@@ -3,6 +3,9 @@ import HomeView from "../views/HomeView.vue";
 import AboutView from "../views/AboutView.vue";
 import UsersView from "../views/UsersView.vue";
 import UsersAboutView from "../views/UsersAboutView.vue";
+import PropRouteView from "../views/PropRouteView.vue";
+import DemoView from "../views/DemoView.vue";
+import DemoPostBeforeView from "../views/DemoPostBeforeView.vue";
 
 const routes = [
   {
@@ -11,14 +14,33 @@ const routes = [
     component: HomeView,
   },
   {
+    path: "/prop/:id",
+    name: "prop",
+    component: PropRouteView,
+    props: true,
+  },
+  {
+    path: "/demo/:id",
+    name: "demo",
+    component: DemoView,
+    props: true,
+  },
+  {
+    path: "/before/:id",
+    name: "before",
+    component: DemoPostBeforeView,
+    props: true,
+  },
+  {
     path: "/user/:id",
     name: "user",
     component: UsersView,
     children: [
       {
-        path: "about",
+        path: "about/:username",
         name: "aboutuser",
         component: UsersAboutView,
+        props: true,
       },
     ],
   },
@@ -37,6 +59,14 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+const isAuthenticated = true;
+
+// GOOD
+router.beforeEach((to, from, next) => {
+  if (to.name !== "about" && !isAuthenticated) next({ name: "about" });
+  else next();
 });
 
 export default router;

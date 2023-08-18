@@ -2,7 +2,10 @@
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> |
-    <button @click="navToUser">User</button>
+    <router-link to="/demo/3">Demo</router-link> |
+    <router-link to="/before/3">Demo Before</router-link> |
+    <button>User</button>
+    <button @click="propView">Prop</button>
   </nav>
   <router-view />
 </template>
@@ -46,6 +49,9 @@ export default {
     };
   },
   methods: {
+    propView() {
+      return this.$router.push({ name: "prop", params: { id: 1 } });
+    },
     // navToUser() {
     //   let r = Math.floor(Math.random() * this.students.length);
     //   return this.$router.push({
@@ -53,14 +59,14 @@ export default {
     //     params: { username: this.students[r].name },
     //   });
     // },
-    navToUser() {
-      for (let student of this.students) {
-        return this.$router.push({
-          name: "user",
-          params: { username: student.name },
-        });
-      }
-    },
+    // navToUser() {
+    //   for (let student of this.students) {
+    //     return this.$router.push({
+    //       name: "user",
+    //       params: { username: student.name, id: student.id },
+    //     });
+    //   }
+    // },
   },
 };
 </script>
